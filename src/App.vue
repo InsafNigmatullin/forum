@@ -1,30 +1,49 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="wrapper">
+    <!-- header -->
+    <div class="wrapper-content">
+      <div class="view">
+        <div class="container">
+          <Form @onSubmit="handleSubmit" />
+          <List :items="items" />
+        </div>
+      </div>
+    </div>
+    <!-- footer -->
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { ref } from 'vue'
 
-nav {
-  padding: 30px;
-}
+import Form from '@/components/Form'
+import List from '@/components/List'
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+export default {
+  components: { Form, List },
+  setup() {
+    const items = ref([
+      {
+        id: 1,
+        body: 'hello vue 3',
+        likes: 12,
+        avatar: `https://avatars.dicebear.com/api/male/1.svg`,
+        date: new Date(Date.now()).toLocaleString()
+      },
+      {
+        id: 2,
+        body: 'hello world',
+        likes: 6,
+        avatar: `https://avatars.dicebear.com/api/male/2.svg`,
+        date: new Date(Date.now()).toLocaleString()
+      }
+    ])
+    const handleSubmit = item => items.value.push(item)
 
-nav a.router-link-exact-active {
-  color: #42b983;
+    return {
+      items,
+      handleSubmit
+    }
+  }
 }
-</style>
+</script>
